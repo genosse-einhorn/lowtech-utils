@@ -1,0 +1,42 @@
+
+# taken from https://stribika.github.io/2015/01/04/secure-secure-shell.html
+
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+
+
+
+Protocol 2 # should be the default
+
+# disable every key but those
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+
+
+# force pubkey authentication (install key first!)
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+PubkeyAuthentication yes
+
+# Recommendations for creating client keys:
+#   ssh-keygen -t ed25519 -o -a 100
+#   ssh-keygen -t rsa -b 4096 -o -a 100
+
+
+# more helpful stuff: limit ssh login to a group
+AllowGroups ssh-user
+
+# don't forget to add the group (sudo groupadd ssh-user) and the users
+#   sudo usermod -a -G ssh-user <username>
+
+
+# test config using ssh -v
+# restarting sshd might kill your session, consider SIGHUP instead
+
+# additional stuff: get rid of all SSH moduli with size < 2048 bits when using DSA
+#   awk '$5 > 2000' /etc/ssh/moduli > "${HOME}/moduli"
+# check if there are any left:
+#   wc -l "${HOME}/moduli"
+# move it back
+#   sudo mv "${HOME}/moduli" /etc/ssh/moduli
