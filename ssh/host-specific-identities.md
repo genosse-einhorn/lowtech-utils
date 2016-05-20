@@ -10,7 +10,7 @@ You can even use symlinks for grouping!
 
 Generate your identity using
 
-    ssh-keygen -t ed25519 -o -a 100 ~/.ssh/identities/$host
+    ssh-keygen -t ed25519 -o -a 100 -f ~/.ssh/identities/$host
 
 And transfer it using
 
