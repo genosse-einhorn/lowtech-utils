@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # possibly quickest way to share your internet connection over a wired network.
 # requires
-#   * NetworkManager up and running
+#   * NetworkManager >= 1.4 up and running
 #   * dnsmasq binary in your path
 #   * iptables and ip6tables with NAT support (requires at least linux 3.9)
 
