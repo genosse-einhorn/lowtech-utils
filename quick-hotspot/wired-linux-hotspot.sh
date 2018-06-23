@@ -64,6 +64,7 @@ trap "printf '\n'; info dnsmasq killed by user" SIGINT;
 dnsmasq --no-daemon --conf-file=/dev/null --interface=$netdev \
     --dhcp-range=$ip4.2,$ip4.200 \
     --dhcp-range=$ip6::2,ra-only \
+    --bind-interfaces \
     || true
 trap - SIGINT
 
