@@ -47,7 +47,7 @@ ip6tables -t nat -D POSTROUTING -s $ip6::/64 -j MASQUERADE || true
 
 info Setting static IP configuration for $netdev...
 
-nmcli con add save no connection.id "$con" type ethernet ifname $netdev ip4 "$ip4.1/24" ip6 "$ip6::1/64"
+nmcli con add save no connection.id "$con" type ethernet ifname $netdev ip4 "$ip4.1/24" ip6 "$ip6::1/64" connection.zone "trusted"
 
 info Starting connection on $netdev...
 nmcli con up "$con"
