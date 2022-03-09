@@ -6,7 +6,7 @@
 #   * dnsmasq binary in your path
 #   * iptables and ip6tables with NAT support (requires at least linux 3.9)
 
-# usage: $0 DEVICENAME
+# usage: $0 DEVICENAME [dnsmasq-params]
 
 set -eu
 
@@ -25,6 +25,7 @@ if [ "x${1:-}" = "x" ]; then
 fi
 
 netdev=$1
+shift
 
 if [ ! "x$UID" = "x0" ]; then
     die "Must be root"
@@ -65,6 +66,7 @@ dnsmasq --no-daemon --conf-file=/dev/null --interface=$netdev \
     --dhcp-range=$ip4.2,$ip4.200 \
     --dhcp-range=$ip6::2,ra-only \
     --bind-interfaces \
+    "$@" \
     || true
 trap - SIGINT
 
